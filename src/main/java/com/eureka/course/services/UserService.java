@@ -2,6 +2,7 @@ package com.eureka.course.services;
 
 import com.eureka.course.entities.User;
 import com.eureka.course.repositories.UserRepository;
+import com.eureka.course.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class UserService {
 
     public User findById(Long id) {
         Optional<User> optUser = repository.findById(id);
-        return optUser.get();
+        return optUser.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User insert(User obj) {
